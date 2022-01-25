@@ -46,7 +46,7 @@ const LoginScreen = () => {
 
   return (
       <div className='container mt-5 text-center'>
-          <img src='/assets/animate.gif' alt='goku-gif' />
+          <img className='goku' src='/assets/animate.gif' alt='goku-gif' />
           <h1 className='mt-3'> Login Screen</h1>
          <form onSubmit={handleSubmit}>
            <label className='m-3 d-flex'>User: <input onChange={handleChange} autoComplete='false' name="inputOne" value={inputOne} placeholder='User'/></label>
