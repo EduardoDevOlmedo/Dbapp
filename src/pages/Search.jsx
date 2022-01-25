@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import queryString from 'query-string';
 import { Characters } from '../models/Characters';
@@ -13,18 +13,18 @@ const Search = ({history}) => {
   const [input, setInput] = useState(q);
   const [characters, setCharacters] = useState([]);
   
-  const getCharacters = () => {
-    if(input.trim() !== ""){
-      const value = input.toLocaleLowerCase()
-      const chars = Characters.filter((character)  => {
-        return character.name.toLowerCase().includes(value)}
-      )
-      setCharacters(chars)
-    }else {
-      setCharacters([])
-    }
-
-  }
+  const getCharacters = useCallback(() => {
+      if(input.trim() !== ""){
+        const value = input.toLocaleLowerCase()
+        const chars = Characters.filter((character)  => {
+          return character.name.toLowerCase().includes(value)}
+        )
+        setCharacters(chars)
+      }else {
+        setCharacters([])
+      }
+  }, [input]);
+  
 
   const handleChange = (e) => {
       const value = e.target.value;
@@ -38,7 +38,7 @@ const Search = ({history}) => {
   
   useEffect(() => {
    getCharacters()
-  }, [q]);
+  }, [q, getCharacters]);
   
 
   return (
@@ -48,18 +48,17 @@ const Search = ({history}) => {
         <div className='row'>
           <div className='col-6'>
           
-            <h3>Search</h3>
+            <h3 className='text-center'>Search</h3>
               <form onSubmit={handleSubmit}>
                 <label className='form-label'>
                   Character: <input className='form-control'
                   onChange={handleChange}
                    autoComplete='off' value={input} placeholder='Character name' type="text"/>
                 </label>
-                <button className='btn btn-info w-100' type='submit'>Search</button>
               </form>
           </div>
-          <div className='col-6'>
-            <h2>Results {characters.length}</h2>
+            <h2 className='text-center'>Results {characters.length}</h2>
+          <div className='row'>
             {
               characters.length === 0 && 
               <div className='alert alert-warning text-center'>

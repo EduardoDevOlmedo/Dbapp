@@ -12,3 +12,16 @@ form {
 label {
     gap: 10px
 }
+
+.row {
+    display: flex;
+    height: auto;
+    place-items: center;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-body {
+    text-align: center;
+}
